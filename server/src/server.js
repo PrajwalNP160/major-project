@@ -91,7 +91,7 @@ let allowedOrigins = (process.env.ALLOWED_ORIGINS || "")
   .map((o) => o.trim())
   .filter(Boolean);
 if (process.env.NODE_ENV !== "production" && allowedOrigins.length === 0) {
-  allowedOrigins = ["http://localhost:5173", "http://127.0.0.1:5173"];
+  allowedOrigins = ["http://localhost:5173", "http://127.0.0.1:5173","https://major-project-1-avef.onrender.com"];
 }
 
 const app = express();

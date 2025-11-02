@@ -114,8 +114,12 @@ export default function Whiteboard({ roomId }) {
           appState: {
             viewBackgroundColor: "#ffffff",
             currentItemStrokeColor: "#000000",
+            viewModeEnabled: false,
           },
         }}
+        viewModeEnabled={false}
+        zenModeEnabled={false}
+        gridModeEnabled={false}
         UIOptions={{
           canvasActions: {
             loadScene: false,

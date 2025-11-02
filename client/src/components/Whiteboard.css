@@ -4,7 +4,8 @@
   width: 100%;
   position: relative;
   overflow: hidden;
-  contain: layout size style;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Ensure Excalidraw takes full container size but doesn't overflow */
@@ -14,6 +15,9 @@
   max-width: 100% !important;
   max-height: 100% !important;
   position: relative !important;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .whiteboard-container .excalidraw {
@@ -55,12 +59,20 @@
   position: relative !important;
 }
 
-/* Make sure canvas doesn't overflow */
+/* Make sure canvas doesn't overflow and handles pointer events correctly */
+.whiteboard-container canvas {
+  position: relative !important;
+  width: 100% !important;
+  height: 100% !important;
+  touch-action: none !important;
+}
+
 .whiteboard-container .excalidraw-canvas-container {
   width: 100% !important;
   height: 100% !important;
   max-width: 100% !important;
   max-height: 100% !important;
+  position: relative !important;
 }
 
 /* Ensure all UI elements are visible */

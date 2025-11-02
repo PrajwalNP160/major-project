@@ -15,15 +15,15 @@ import axios from "axios";
 const getApiBaseUrl = () => {
   const envUrl = import.meta.env.VITE_API_URL;
   
-  // if (envUrl) {
-  //   // If VITE_API_URL is set, ensure it ends with /api
-  //   return envUrl.endsWith('/api') ? envUrl : `${envUrl}/api`;
-  // }
+  if (envUrl) {
+    // If VITE_API_URL is set, ensure it ends with /api
+    return envUrl.endsWith('/api') ? envUrl : `${envUrl}/api`;
+  }
   
   // Default URLs based on hostname detection
   return (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'))
-    ? "http://localhost:8000"
-    : "https://major-project-verd.onrender.com";
+    ? "http://localhost:8000/api"
+    : "https://major-project-verd.onrender.com/api";
 };
 
 const API_BASE_URL = getApiBaseUrl();

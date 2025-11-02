@@ -90,8 +90,14 @@ let allowedOrigins = (process.env.ALLOWED_ORIGINS || "")
   .split(",")
   .map((o) => o.trim())
   .filter(Boolean);
-if (process.env.NODE_ENV !== "production" && allowedOrigins.length === 0) {
-  allowedOrigins = ["http://localhost:5173", "http://127.0.0.1:5173","https://major-project-1-avef.onrender.com"];
+
+// If no environment variable set, use defaults based on environment
+if (allowedOrigins.length === 0) {
+  if (process.env.NODE_ENV === "production") {
+    allowedOrigins = ["https://major-project-1-avef.onrender.com"];
+  } else {
+    allowedOrigins = ["http://localhost:5173", "http://127.0.0.1:5173"];
+  }
 }
 
 const app = express();
@@ -115,14 +121,22 @@ const io = new Server(server, {
 app.use(
   cors({
     origin: function (origin, callback) {
+      console.log('🔍 CORS request from origin:', origin);
+      console.log('📋 Allowed origins:', allowedOrigins);
+      
       if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) return callback(null, true);
+      if (allowedOrigins.includes(origin)) {
+        console.log('✅ Origin allowed');
+        return callback(null, true);
+      }
       if (
         process.env.NODE_ENV !== "production" &&
         /^http:\/\/(localhost|127\.0\.0\.1)(:\\d+)?$/.test(origin)
       ) {
+        console.log('✅ Localhost origin allowed in development');
         return callback(null, true);
       }
+      console.log('❌ Origin not allowed');
       return callback(new Error("CORS not allowed for this origin"));
     },
     methods: ["GET", "POST", "PUT", "DELETE"],

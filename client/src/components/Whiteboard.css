@@ -1,0 +1,75 @@
+/* Whiteboard Container */
+.whiteboard-container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  contain: layout size style;
+}
+
+/* Ensure Excalidraw takes full container size but doesn't overflow */
+.whiteboard-container > div {
+  height: 100% !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  position: relative !important;
+}
+
+.whiteboard-container .excalidraw {
+  height: 100% !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  position: relative !important;
+}
+
+/* Prevent whiteboard from taking full viewport */
+.whiteboard-container .excalidraw,
+.whiteboard-container .excalidraw__wrapper {
+  position: relative !important;
+  inset: auto !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+}
+
+/* Fix for Excalidraw toolbar visibility */
+.whiteboard-container .excalidraw .App-menu,
+.whiteboard-container .excalidraw .App-menu_top,
+.whiteboard-container .excalidraw .App-menu_bottom {
+  z-index: 100 !important;
+  position: relative !important;
+}
+
+.whiteboard-container .excalidraw .App-toolbar,
+.whiteboard-container .excalidraw .App-toolbar-container {
+  z-index: 100 !important;
+  position: relative !important;
+}
+
+/* Ensure tools panel is visible */
+.whiteboard-container .excalidraw .Island,
+.whiteboard-container .excalidraw .Stack {
+  z-index: 100 !important;
+  position: relative !important;
+}
+
+/* Make sure canvas doesn't overflow */
+.whiteboard-container .excalidraw-canvas-container {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+/* Ensure all UI elements are visible */
+.whiteboard-container .excalidraw .layer-ui__wrapper {
+  z-index: 50 !important;
+}
+
+.whiteboard-container .excalidraw .layer-ui__wrapper__top-left,
+.whiteboard-container .excalidraw .layer-ui__wrapper__top-right,
+.whiteboard-container .excalidraw .layer-ui__wrapper__footer {
+  z-index: 100 !important;
+}

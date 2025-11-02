@@ -96,7 +96,7 @@ if (allowedOrigins.length === 0) {
   if (process.env.NODE_ENV === "production") {
     allowedOrigins = ["https://major-project-1-avef.onrender.com"];
   } else {
-    allowedOrigins = ["http://localhost:5173", "http://127.0.0.1:5173"];
+    allowedOrigins = ["https://major-project-1-avef.onrender.com","http://localhost:5173", "http://127.0.0.1:5173"];
   }
 }
 

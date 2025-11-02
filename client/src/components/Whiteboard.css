@@ -3,9 +3,9 @@
   height: 100%;
   width: 100%;
   position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  min-height: 0;
 }
 
 /* Ensure Excalidraw takes full container size but doesn't overflow */
@@ -84,15 +84,4 @@
 .whiteboard-container .excalidraw .layer-ui__wrapper__top-right,
 .whiteboard-container .excalidraw .layer-ui__wrapper__footer {
   z-index: 100 !important;
-}
-
-/* Ensure bottom toolbar has space and is fully visible */
-.whiteboard-container .excalidraw .layer-ui__wrapper__footer {
-  bottom: 8px !important;
-  padding-bottom: 8px !important;
-}
-
-.whiteboard-container .excalidraw .layer-ui__wrapper__footer-left,
-.whiteboard-container .excalidraw .layer-ui__wrapper__footer-center {
-  margin-bottom: 8px !important;
 }

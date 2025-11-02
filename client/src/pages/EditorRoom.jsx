@@ -183,8 +183,8 @@ export default function EditorRoom() {
       <div className="flex flex-col lg:flex-row h-[calc(100vh-80px)]">
         {/* Left Panel - Code Editor / Whiteboard */}
         <div className="flex-1 lg:flex-[2] p-4">
-          <div className="bg-white rounded-xl shadow-lg border border-gray-200 h-full flex flex-col">
-            <div className="bg-gray-50 px-4 py-2 border-b border-gray-200 flex items-center justify-between flex-shrink-0">
+          <div className="bg-white rounded-xl shadow-lg border border-gray-200 h-full overflow-hidden">
+            <div className="bg-gray-50 px-4 py-2 border-b border-gray-200 flex items-center justify-between">
               <h2 className="text-sm font-semibold text-gray-700">
                 {showWhiteboard ? "🎨 Whiteboard" : "💻 Code Editor"}
               </h2>
@@ -192,7 +192,7 @@ export default function EditorRoom() {
                 {showWhiteboard ? "Draw and explain concepts" : "Write and execute code"}
               </span>
             </div>
-            <div className="flex-1 min-h-0">
+            <div className="h-[calc(100%-48px)]">
               {showWhiteboard ? (
                 <Whiteboard roomId={roomId} />
               ) : (

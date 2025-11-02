@@ -2,16 +2,24 @@ import { io } from "socket.io-client";
 
 const SOCKET_URL =
   import.meta.env.VITE_SOCKET_URL ||
-  (import.meta.env.MODE === "development"
+  (typeof window !== 'undefined' && window.location.hostname === 'localhost'
     ? "http://localhost:8000"
     : "https://skillswap-h4b.onrender.com");
+
+// Debug logs
+console.log("🔧 Socket Configuration:", {
+  hostname: typeof window !== 'undefined' ? window.location.hostname : 'server',
+  VITE_SOCKET_URL: import.meta.env.VITE_SOCKET_URL,
+  SOCKET_URL: SOCKET_URL,
+  MODE: import.meta.env.MODE
+});
 
 const socket = io(SOCKET_URL, {
   transports: ["websocket", "polling"],
   withCredentials: true,
 });
 
-// Debug logs
+// Connection logs
 socket.on("connect", () => {
   console.log("✅ Connected to server. Socket ID:", socket.id);
 });

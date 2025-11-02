@@ -20,8 +20,8 @@ const getApiBaseUrl = () => {
     return envUrl.endsWith('/api') ? envUrl : `${envUrl}/api`;
   }
   
-  // Default URLs based on environment
-  return import.meta.env.MODE === "development"
+  // Default URLs based on hostname detection
+  return (typeof window !== 'undefined' && window.location.hostname === 'localhost')
     ? "http://localhost:8000/api"
     : "https://skillswap-h4b-b9s2.onrender.com/api";
 };

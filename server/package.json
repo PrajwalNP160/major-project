@@ -22,7 +22,7 @@
     "express": "^5.1.0",
     "mongoose": "^8.13.2",
     "multer": "^1.4.5-lts.2",
-    "cloudinary-multer": "^1.1.0",
+    "multer-storage-cloudinary": "^4.0.0",
     "mysql2": "^3.15.3",
     "sequelize": "^6.37.7",
     "socket.io": "^4.8.1",
@@ -30,5 +30,10 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
+  },
+  "overrides": {
+    "multer-storage-cloudinary": {
+      "cloudinary": "^2.3.0"
+    }
   }
 }

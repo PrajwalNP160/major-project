@@ -103,42 +103,19 @@ if (allowedOrigins.length === 0) {
 const app = express();
 const server = http.createServer(app);
 
-// ✅ Socket.io CORS (allow any localhost:* in dev)
-const socketCorsOrigin =
-  process.env.NODE_ENV !== "production"
-    ? [/^http:\/\/(localhost|127\.0\.0\.1)(:\\d+)?$/]
-    : allowedOrigins;
-
+// ✅ Socket.io CORS - Allow all origins (WARNING: Not recommended for production)
 const io = new Server(server, {
   cors: {
-    origin: socketCorsOrigin,
+    origin: true, // Allow all origins
     methods: ["GET", "POST"],
     credentials: true,
   },
 });
 
-// ✅ Express CORS
+// ✅ Express CORS - Allow all origins (WARNING: Not recommended for production)
 app.use(
   cors({
-    origin: function (origin, callback) {
-      console.log('🔍 CORS request from origin:', origin);
-      console.log('📋 Allowed origins:', allowedOrigins);
-      
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) {
-        console.log('✅ Origin allowed');
-        return callback(null, true);
-      }
-      if (
-        process.env.NODE_ENV !== "production" &&
-        /^http:\/\/(localhost|127\.0\.0\.1)(:\\d+)?$/.test(origin)
-      ) {
-        console.log('✅ Localhost origin allowed in development');
-        return callback(null, true);
-      }
-      console.log('❌ Origin not allowed');
-      return callback(new Error("CORS not allowed for this origin"));
-    },
+    origin: true, // Allow all origins
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })

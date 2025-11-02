@@ -4,7 +4,7 @@ const SOCKET_URL =
   import.meta.env.VITE_SOCKET_URL ||
   (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
     ? "http://localhost:8000"
-    : "https://major-project-f5ir.vercel.app");
+    : "https://major-project-verd.onrender.com");
 
 // Debug logs
 console.log("🔧 Socket Configuration:", {

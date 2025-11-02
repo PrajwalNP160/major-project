@@ -2,9 +2,9 @@ import { io } from "socket.io-client";
 
 const SOCKET_URL =
   import.meta.env.VITE_SOCKET_URL ||
-  (typeof window !== 'undefined' && window.location.hostname === 'localhost'
+  (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
     ? "http://localhost:8000"
-    : "https://skillswap-h4b.onrender.com");
+    : "https://major-project-f5ir.vercel.app");
 
 // Debug logs
 console.log("🔧 Socket Configuration:", {

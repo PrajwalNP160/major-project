@@ -21,12 +21,20 @@ const getApiBaseUrl = () => {
   }
   
   // Default URLs based on hostname detection
-  return (typeof window !== 'undefined' && window.location.hostname === 'localhost')
+  return (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'))
     ? "http://localhost:8000/api"
-    : "https://skillswap-h4b-b9s2.onrender.com/api";
+    : "https://major-project-f5ir.vercel.app/api";
 };
 
 const API_BASE_URL = getApiBaseUrl();
+
+// Debug logs
+console.log("🔧 API Configuration:", {
+  hostname: typeof window !== 'undefined' ? window.location.hostname : 'server',
+  VITE_API_URL: import.meta.env.VITE_API_URL,
+  API_BASE_URL: API_BASE_URL,
+  MODE: import.meta.env.MODE
+});
 
 export const axiosInstance = axios.create({
   baseURL: API_BASE_URL,

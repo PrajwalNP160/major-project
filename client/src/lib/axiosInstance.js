@@ -27,7 +27,7 @@ import axios from "axios";
 // };
 
 // const API_BASE_URL = getApiBaseUrl();
-const API_BASE_URL = "https://major-project-verd.onrender.com";
+const API_BASE_URL = "https://major-project-verd.onrender.com/api";
 
 // Debug logs
 console.log("🔧 API Configuration:", {

@@ -13,11 +13,16 @@ export default function Whiteboard({ roomId }) {
   useEffect(() => {
     if (!excalidrawAPI) return;
 
+    console.log('🎨 Initializing whiteboard for room:', roomId);
+    console.log('🔌 Socket connected:', socket.connected);
+
     // Request whiteboard history when joining
     socket.emit("whiteboard_join", { room: roomId });
+    console.log('📨 Sent whiteboard_join event');
 
     // Listen for whiteboard history
     const handleWhiteboardHistory = (data) => {
+      console.log('📥 Received whiteboard history:', data);
       if (data && data.elements) {
         isRemoteUpdateRef.current = true;
         excalidrawAPI.updateScene({
@@ -33,6 +38,7 @@ export default function Whiteboard({ roomId }) {
 
     // Listen for whiteboard changes from other users
     const handleWhiteboardChange = (data) => {
+      console.log('📥 Received whiteboard update from another user:', data);
       if (data && data.elements) {
         isRemoteUpdateRef.current = true;
         excalidrawAPI.updateScene({
@@ -57,21 +63,34 @@ export default function Whiteboard({ roomId }) {
 
   // Handle changes made by current user
   const handleChange = useCallback(
-    (elements, appState) => {
-      if (!excalidrawAPI) return;
+    (elements, appState, files) => {
+      console.log('📝 Whiteboard change detected:', { 
+        elementsCount: elements?.length, 
+        hasAppState: !!appState,
+        isRemoteUpdate: isRemoteUpdateRef.current 
+      });
+
+      if (!excalidrawAPI) {
+        console.log('⚠️ No excalidrawAPI available');
+        return;
+      }
 
       // Don't broadcast if this change came from a remote update
       if (isRemoteUpdateRef.current) {
+        console.log('⏭️ Skipping broadcast - remote update');
         return;
       }
 
       // Throttle updates to prevent flooding
       const now = Date.now();
       if (now - lastEmitTimeRef.current < throttleDelayMs) {
+        console.log('⏭️ Skipping broadcast - throttled');
         return;
       }
       lastEmitTimeRef.current = now;
 
+      console.log('📤 Broadcasting whiteboard change to room:', roomId);
+      
       // Emit changes to other users
       socket.emit("whiteboard_change", {
         room: roomId,
@@ -83,7 +102,7 @@ export default function Whiteboard({ roomId }) {
         },
       });
     },
-    [excalidrawAPI, roomId, throttleDelayMs]
+    [excalidrawAPI, roomId]
   );
 
   return (

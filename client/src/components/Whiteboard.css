@@ -3,8 +3,8 @@
   height: 100%;
   width: 100%;
   position: relative;
-  overflow: visible;
-  contain: layout size;
+  overflow: hidden;
+  contain: layout size style;
 }
 
 /* Ensure Excalidraw takes full container size but doesn't overflow */
@@ -68,30 +68,8 @@
   z-index: 50 !important;
 }
 
-.whiteboard-container .excalidraw .layer-ui__wrapper__top-left,
-.whiteboard-container .excalidraw .layer-ui__wrapper__top-right,
-.whiteboard-container .excalidraw .layer-ui__wrapper__footer {
+.whiteboard-container .excalidraw .layer-ui_wrapper_top-left,
+.whiteboard-container .excalidraw .layer-ui_wrapper_top-right,
+.whiteboard-container .excalidraw .layer-ui_wrapper_footer {
   z-index: 100 !important;
-}
-
-/* Fix for shape properties panel (stroke color, etc.) */
-.whiteboard-container .excalidraw .properties {
-  max-height: calc(100vh - 200px) !important;
-  overflow-y: auto !important;
-  overflow-x: visible !important;
-}
-
-/* Ensure the properties panel is visible and properly positioned */
-.whiteboard-container .excalidraw .layer-ui__wrapper__footer-center {
-  position: relative !important;
-  max-height: 80vh !important;
-  overflow-y: auto !important;
-  overflow-x: visible !important;
-}
-
-/* Make sure close button in properties panel is visible */
-.whiteboard-container .excalidraw .Island button {
-  pointer-events: auto !important;
-  visibility: visible !important;
-  opacity: 1 !important;
 }

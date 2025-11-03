@@ -183,7 +183,7 @@ export default function EditorRoom() {
       <div className="flex flex-col lg:flex-row h-[calc(100vh-80px)]">
         {/* Left Panel - Code Editor / Whiteboard */}
         <div className="flex-1 lg:flex-[2] p-4">
-          <div className={`bg-white rounded-xl shadow-lg border border-gray-200 h-full ${showWhiteboard ? 'overflow-visible' : 'overflow-hidden'}`}>
+          <div className="bg-white rounded-xl shadow-lg border border-gray-200 h-full overflow-hidden">
             <div className="bg-gray-50 px-4 py-2 border-b border-gray-200 flex items-center justify-between">
               <h2 className="text-sm font-semibold text-gray-700">
                 {showWhiteboard ? "🎨 Whiteboard" : "💻 Code Editor"}

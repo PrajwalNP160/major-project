@@ -97,7 +97,7 @@ export const uploadResourceMySQL = async (req, res) => {
       title: title || req.file.originalname,
       description: description || "",
       uploadedBy: user._id.toString(),
-      isPublic: false, // Make files private by default
+      isPublic: true, // Make resources public by default so they can be shared
     });
 
     const fileData = {

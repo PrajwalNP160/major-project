@@ -14,17 +14,15 @@ import {
 
 const router = express.Router();
 
-// Public routes
+// Public routes (no authentication required)
 router.get("/", getStudyGroups); // Browse study groups
+router.get("/:id", getStudyGroupById); // View specific study group
 
-// Protected routes
+// Protected routes (authentication required)
 router.use(clerkAuthMiddleware, requireAuth());
 
-// User's study groups (must come before /:id route)
+// User's study groups
 router.get("/user/my-groups", getUserStudyGroups);
-
-// Get specific study group (must come after specific routes)
-router.get("/:id", getStudyGroupById);
 
 // Create study group
 router.post("/create", createStudyGroup);

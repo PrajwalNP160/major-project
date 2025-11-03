@@ -12,22 +12,21 @@
 import axios from "axios";
 
 // Ensure API_BASE_URL always includes /api suffix
-// const getApiBaseUrl = () => {
-//   const envUrl = import.meta.env.VITE_API_URL;
+const getApiBaseUrl = () => {
+  const envUrl = import.meta.env.VITE_API_URL;
   
-//   if (envUrl) {
-//     // If VITE_API_URL is set, ensure it ends with /api
-//     return envUrl.endsWith('/api') ? envUrl : `${envUrl}/api`;
-//   }
+  if (envUrl) {
+    // If VITE_API_URL is set, ensure it ends with /api
+    return envUrl.endsWith('/api') ? envUrl : `${envUrl}/api`;
+  }
   
-//   // Default URLs based on hostname detection
-//   return (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'))
-//     ? "http://localhost:8000/api"
-//     : "https://major-project-verd.onrender.com/api";
-// };
+  // Default URLs based on hostname detection
+  return (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'))
+    ? "http://localhost:8000/api"
+    : "https://major-project-verd.onrender.com/api";
+};
 
-// const API_BASE_URL = getApiBaseUrl();
-const API_BASE_URL = "https://major-project-verd.onrender.com/api";
+const API_BASE_URL = getApiBaseUrl();
 
 // Debug logs
 console.log("🔧 API Configuration:", {

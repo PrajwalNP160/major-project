@@ -1,72 +1,97 @@
-@import "tailwindcss";
-
-/* Custom animations for rating modal */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+/* Whiteboard Container */
+.whiteboard-container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: visible;
+  contain: layout size;
 }
 
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Ensure Excalidraw takes full container size but doesn't overflow */
+.whiteboard-container > div {
+  height: 100% !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  position: relative !important;
 }
 
-.animate-fadeIn {
-  animation: fadeIn 0.2s ease-out;
+.whiteboard-container .excalidraw {
+  height: 100% !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  position: relative !important;
 }
 
-.animate-slideUp {
-  animation: slideUp 0.3s ease-out;
-}
-
-/* Excalidraw Whiteboard Fixes */
-.excalidraw {
-  --color-primary: #6965db;
-  --color-primary-darker: #5753c6;
-  --color-primary-darkest: #4a47a3;
-  --color-primary-light: #e3e2fe;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-}
-
-/* Prevent Excalidraw from taking full viewport */
-.excalidraw,
-.excalidraw__wrapper {
+/* Prevent whiteboard from taking full viewport */
+.whiteboard-container .excalidraw,
+.whiteboard-container .excalidraw__wrapper {
   position: relative !important;
   inset: auto !important;
-  transform: none !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
 }
 
-.excalidraw .App-menu_top .buttonList {
-  gap: 0.25rem;
+/* Fix for Excalidraw toolbar visibility */
+.whiteboard-container .excalidraw .App-menu,
+.whiteboard-container .excalidraw .App-menu_top,
+.whiteboard-container .excalidraw .App-menu_bottom {
+  z-index: 100 !important;
+  position: relative !important;
 }
 
-.excalidraw button {
-  font-family: inherit;
+.whiteboard-container .excalidraw .App-toolbar,
+.whiteboard-container .excalidraw .App-toolbar-container {
+  z-index: 100 !important;
+  position: relative !important;
 }
 
-/* Ensure Excalidraw canvas doesn't overflow */
-.excalidraw .excalidraw-canvas-container {
+/* Ensure tools panel is visible */
+.whiteboard-container .excalidraw .Island,
+.whiteboard-container .excalidraw .Stack {
+  z-index: 100 !important;
+  position: relative !important;
+}
+
+/* Make sure canvas doesn't overflow */
+.whiteboard-container .excalidraw-canvas-container {
   width: 100% !important;
   height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
 }
 
-/* Make sure toolbar and tools are visible */
-.excalidraw .layer-ui__wrapper {
-  pointer-events: auto !important;
+/* Ensure all UI elements are visible */
+.whiteboard-container .excalidraw .layer-ui__wrapper {
+  z-index: 50 !important;
 }
 
-.excalidraw .Island {
+.whiteboard-container .excalidraw .layer-ui__wrapper__top-left,
+.whiteboard-container .excalidraw .layer-ui__wrapper__top-right,
+.whiteboard-container .excalidraw .layer-ui__wrapper__footer {
+  z-index: 100 !important;
+}
+
+/* Fix for shape properties panel (stroke color, etc.) */
+.whiteboard-container .excalidraw .properties {
+  max-height: calc(100vh - 200px) !important;
+  overflow-y: auto !important;
+  overflow-x: visible !important;
+}
+
+/* Ensure the properties panel is visible and properly positioned */
+.whiteboard-container .excalidraw .layer-ui__wrapper__footer-center {
+  position: relative !important;
+  max-height: 80vh !important;
+  overflow-y: auto !important;
+  overflow-x: visible !important;
+}
+
+/* Make sure close button in properties panel is visible */
+.whiteboard-container .excalidraw .Island button {
   pointer-events: auto !important;
-  opacity: 1 !important;
   visibility: visible !important;
+  opacity: 1 !important;
 }

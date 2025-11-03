@@ -284,6 +284,15 @@ export const getFile = async (req, res) => {
       userId = null;
     }
     
+    console.log('📁 File access attempt:', {
+      fileId,
+      fileName: file.originalName,
+      fileType: file.fileType,
+      isPublic: file.isPublic,
+      uploadedBy: file.uploadedBy,
+      requestingUserId: userId
+    });
+    
     // Allow access if:
     // 1. File is public, OR
     // 2. User is the owner of the file, OR
@@ -292,9 +301,19 @@ export const getFile = async (req, res) => {
                      (userId && file.uploadedBy === userId) ||
                      (userId && file.fileType === 'resource');
     
+    console.log('🔐 Access check:', { canAccess, isPublic: file.isPublic, isOwner: userId === file.uploadedBy, isResource: file.fileType === 'resource' });
+    
     if (!canAccess) {
-      return res.status(403).json({ message: "Access denied" });
+      console.log('❌ Access denied for file:', fileId);
+      return res.status(403).json({ 
+        message: "Access denied. File is private and you don't have permission to view it.",
+        fileId: fileId,
+        isPublic: file.isPublic,
+        fileType: file.fileType
+      });
     }
+    
+    console.log('✅ Access granted for file:', fileId);
 
     // Increment download count
     await file.increment('downloadCount');

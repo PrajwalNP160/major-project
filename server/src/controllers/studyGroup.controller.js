@@ -174,22 +174,36 @@ export const joinStudyGroup = async (req, res) => {
     const { id } = req.params;
     const clerkId = req.auth?.userId;
 
+    console.log('🔄 Join study group request:', { groupId: id, clerkId });
+
     if (!clerkId) {
+      console.log('❌ No clerkId provided');
       return res.status(401).json({ message: "Unauthorized" });
     }
 
     const user = await User.findOne({ clerkId }).lean();
     if (!user) {
+      console.log('❌ User not found with clerkId:', clerkId);
       return res.status(404).json({ message: "User not found" });
     }
 
+    console.log('✅ User found:', { userId: user._id, email: user.email });
+
     const studyGroup = await StudyGroup.findById(id);
     if (!studyGroup) {
+      console.log('❌ Study group not found:', id);
       return res.status(404).json({ message: "Study group not found" });
     }
 
+    console.log('✅ Study group found:', {
+      name: studyGroup.name,
+      currentMembers: studyGroup.currentMembers,
+      maxMembers: studyGroup.maxMembers
+    });
+
     // Check if group is full
     if (studyGroup.currentMembers >= studyGroup.maxMembers) {
+      console.log('❌ Group is full');
       return res.status(400).json({ message: "Study group is full" });
     }
 
@@ -199,15 +213,19 @@ export const joinStudyGroup = async (req, res) => {
     );
 
     if (existingMember) {
+      console.log('ℹ️ User is already in members list:', { isActive: existingMember.isActive });
       if (existingMember.isActive) {
+        console.log('❌ User is already an active member');
         return res.status(400).json({ message: "You are already a member of this group" });
       } else {
         // Reactivate membership
+        console.log('♻️ Reactivating membership');
         existingMember.isActive = true;
         existingMember.joinedAt = new Date();
       }
     } else {
       // Add new member
+      console.log('➕ Adding new member to group');
       studyGroup.members.push({
         userId: user._id,
         role: "member",
@@ -217,6 +235,7 @@ export const joinStudyGroup = async (req, res) => {
 
     studyGroup.lastActivity = new Date();
     await studyGroup.save();
+    console.log('✅ Study group saved successfully');
 
     // Return updated group
     const updatedGroup = await StudyGroup.findById(id)

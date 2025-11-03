@@ -14,12 +14,15 @@ import {
 
 const router = express.Router();
 
-// Public routes (no authentication required)
+// Apply clerk middleware to all routes (makes getAuth available)
+router.use(clerkAuthMiddleware);
+
+// Public routes (no authentication required, but auth is optional)
 router.get("/", getStudyGroups); // Browse study groups
 router.get("/:id", getStudyGroupById); // View specific study group
 
 // Protected routes (authentication required)
-router.use(clerkAuthMiddleware, requireAuth());
+router.use(requireAuth());
 
 // User's study groups
 router.get("/user/my-groups", getUserStudyGroups);

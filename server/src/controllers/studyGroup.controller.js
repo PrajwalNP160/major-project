@@ -60,11 +60,17 @@ export const getStudyGroups = async (req, res) => {
   }
 };
 
-// Get study group by ID
+// Get study group by ID  
 export const getStudyGroupById = async (req, res) => {
   try {
     const { id } = req.params;
-    const clerkId = req.auth?.userId;
+    
+    // Use getAuth which works on public routes too
+    const { getAuth } = await import('@clerk/express');
+    const auth = getAuth(req);
+    const clerkId = auth?.userId;
+    
+    console.log('📖 Get study group by ID:', { groupId: id, clerkId });
 
     const studyGroup = await StudyGroup.findById(id)
       .populate("creator", "firstName lastName avatar email")
@@ -85,7 +91,16 @@ export const getStudyGroupById = async (req, res) => {
         userMembership = studyGroup.members.find(
           member => member.userId._id.toString() === user._id.toString()
         );
+        console.log('👤 User membership check:', { 
+          userId: user._id, 
+          isMember: !!userMembership,
+          role: userMembership?.role 
+        });
+      } else {
+        console.log('⚠️ Clerk user found but not in database:', clerkId);
       }
+    } else {
+      console.log('ℹ️ No authentication provided');
     }
 
     return res.status(200).json({

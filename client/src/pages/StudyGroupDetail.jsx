@@ -34,7 +34,21 @@ const StudyGroupDetail = () => {
   const fetchStudyGroup = async () => {
     try {
       setLoading(true);
-      const response = await axiosInstance.get(`/study-groups/${id}`);
+      
+      // Include auth token if user is signed in
+      const headers = {};
+      if (isSignedIn) {
+        const token = await getToken();
+        headers.Authorization = `Bearer ${token}`;
+      }
+      
+      const response = await axiosInstance.get(`/study-groups/${id}`, { headers });
+      console.log('📊 Study group data received:', {
+        studyGroup: response.data.studyGroup?.name,
+        userMembership: response.data.userMembership,
+        isMember: !!response.data.userMembership,
+        isSignedIn
+      });
       setStudyGroup(response.data.studyGroup);
       setUserMembership(response.data.userMembership);
     } catch (error) {
